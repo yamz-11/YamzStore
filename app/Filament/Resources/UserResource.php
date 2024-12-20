@@ -23,6 +23,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -42,7 +44,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->dehydrated(fn($state) => filled($state))
-                    ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
+                    ->required(fn(Page $livewire): bool => $livewire instanceof CreateRecord)
                     ->maxLength(255),
             ]);
     }
@@ -89,6 +91,11 @@ class UserResource extends Resource
         return [
             OrdersRelationManager::class
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
     }
 
     public static function getPages(): array
