@@ -106,15 +106,15 @@ class OrderResource extends Resource
 
                         Textarea::make('notes')
                             ->columnSpanFull(),
-
                     ])->columns(2),
 
                     Section::make('Order Items')->schema([
                         Repeater::make('items')
                             ->relationship()
                             ->schema([
+
                                 Select::make('product_id')
-                                    ->relationship('products', 'name')
+                                    ->relationship('product', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->required()
@@ -146,7 +146,7 @@ class OrderResource extends Resource
                                     ->required()
                                     ->dehydrated()
                                     ->columnSpan(3),
-                            ])->column(12),
+                            ])->columns(12),
 
                         Placeholder::make('grand_total_placeholder')
                             ->label('Grand Total')
@@ -175,48 +175,48 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                ->label('Order ID')
-                ->sortable()
-                ->searchable(),
+                    ->label('Order ID')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('user.name')
-                ->label('Customer')
-                ->sortable()
-                ->searchable(),
+                    ->label('Customer')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('grand_total')
-                ->numeric()
-                ->sortable()
-                ->money('IDR')
-                ->searchable(),
+                    ->numeric()
+                    ->sortable()
+                    ->money('IDR')
+                    ->searchable(),
 
                 TextColumn::make('payment_method')
-                ->searchable()
-                ->sortable(),
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('payment_status')
-                ->searchable()
-                ->sortable(),
+                    ->searchable()
+                    ->sortable(),
 
                 SelectColumn::make('status')
-                ->options([
-                    'new' => 'New',
-                    'processing' => 'Processing',
-                    'done' => 'Done',
-                    'cancelled' => 'Cancelled',
-                ])
-                ->searchable()
-                ->sortable(),
+                    ->options([
+                        'new' => 'New',
+                        'processing' => 'Processing',
+                        'done' => 'Done',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true)
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
                 //
@@ -242,11 +242,14 @@ class OrderResource extends Resource
         ];
     }
 
-    public static function getNavigationBadge(): ?string {
+    //number order
+    public static function getNavigationBadge(): ?string
+    {
         return static::getModel()::count();
     }
 
-    public static function getNavigationBadgeColor(): string|array|null {
+    public static function getNavigationBadgeColor(): string|array|null
+    {
         return static::getModel()::count() > 10 ? 'success' : 'danger';
     }
 

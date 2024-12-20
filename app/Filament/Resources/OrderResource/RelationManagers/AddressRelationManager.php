@@ -31,7 +31,10 @@ class AddressRelationManager extends RelationManager
                 ->maxlength(20),
 
                 TextInput::make('email')
-                ->required(),
+                ->required()
+                ->email()
+                ->maxlength(255)
+                ->placeholder('Enter a valid email address'),
             ]);
     }
 
@@ -40,10 +43,12 @@ class AddressRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('fullname')
-                ->label('Full Name'),
+                TextColumn::make('name')
+                ->label('Name'),
 
                 TextColumn::make('phone'),
+
+                TextColumn::make('email'),
             ])
             ->filters([
                 //
